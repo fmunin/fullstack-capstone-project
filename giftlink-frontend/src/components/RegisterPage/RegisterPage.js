@@ -93,4 +93,4 @@ function RegisterPage() {
          )//end of return
 }
 
-export default RegisterPage;la
+export default RegisterPage;

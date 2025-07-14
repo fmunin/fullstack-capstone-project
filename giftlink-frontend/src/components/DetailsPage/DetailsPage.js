@@ -20,7 +20,7 @@ function DetailsPage() {
         const fetchGift = async () => {
             try {
 				// Task 2: Fetch gift details -frm added right side of assignment
-                urlGift = `${urlConfig.backendUrl}/api/gifts/${productId}` ; //frm added
+                const urlGift = `${urlConfig.backendUrl}/api/gifts/${productId}` ; //frm added
                 const response = await fetch(urlGift);
                 
                 if (!response.ok) {
