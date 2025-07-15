@@ -39,6 +39,7 @@ function SearchPage() {
 
     // Task 2. Fetch search results from the API based on user inputs.
     const handleSearch = async () => {
+        console.log('Starting search....');
         // Construct the search URL based on user input
         const baseUrl = `${urlConfig.backendUrl}/api/search?`;
         const queryParams = new URLSearchParams({
@@ -51,7 +52,7 @@ function SearchPage() {
         try {
             const response = await fetch(`${baseUrl}${queryParams}`);
             if (!response.ok) {
-                throw new Error('Search failed');
+                throw new Error(`Search failed /n - baseUrl: ${baseUrl}/nquery param:${queryParams}`);
             }
             const data = await response.json();
             setSearchResults(data);

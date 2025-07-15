@@ -6,7 +6,8 @@ const connectToDatabase = require('../models/db');
 router.get('/', async (req, res, next) => {
     try {
         // Task 1: Connect to MongoDB using connectToDatabase database. Remember to use the await keyword and store the connection in `db`
-         const db = await connectToDatabase() ;//frm added
+        console.log('connection to Mongo Db'); 
+        const db = await connectToDatabase() ;//frm added
 
 
         const collection = db.collection("gifts");
@@ -32,8 +33,9 @@ router.get('/', async (req, res, next) => {
             // {{insert code here}}
             query.age_years = { $lte: parseInt(req.query.age_years) };
         }
-
-        // Task 4: Fetch filtered gifts using the find(query) method. Make sure to use await and store the result in the `gifts` constant
+        console.log(query); //debug print out query
+        // Task 4: Fetch filtered gifts using the find(query) method.
+        //  Make sure to use await and store the result in the `gifts` constant
         await collection.find(query).toArray() ; //frm added
 
         res.json(gifts);

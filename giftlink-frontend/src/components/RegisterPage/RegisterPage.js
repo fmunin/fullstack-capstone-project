@@ -59,7 +59,7 @@ function RegisterPage() {
         className="form-control"
         placeholder="Enter your Email"
         value={email}
-        onChange={(e) => setEMail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
         />
     </div>
 
