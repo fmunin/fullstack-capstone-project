@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
 import './RegisterPage.css';
+import {urlConfig} from '../../config';
+import { useAppContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 
 function RegisterPage() {
 
@@ -9,12 +13,51 @@ function RegisterPage() {
     const [lastName, setLastName] = useState('');  //frm added
     const [email, setEmail] = useState(''); //frm added
     const [password, setPassword] = useState(''); //frm added
+    //module 4 updates
+    const [showerr, setShowerr] = useState(''); //frm added module 4
+    const navigate = useNavigate();//frm added module 4
+    const { setIsLoggedIn } = useAppContext();     //frm added module 4 
 
     // insert code here to create handleRegister function and include console.log
     const handleRegister = async () => {
-        console.log("Register invoked")
-    }           //frm added
-         return (
+        //added from module 4
+        const response = await fetch(`${urlConfig.backendUrl}/api/auth/register`, {
+                //Step 1 - Task 6
+                method: 'POST',
+                //Step 1 - Task 7
+                headers: {
+                    'content-type': 'application/json',
+                },
+                //Step 1 - Task 8
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password
+                })
+            });
+            //Step 2 - Task 1
+            const json = await response.json();
+            console.log('json data', json);
+            console.log('er', json.error);
+            //Step 2 - Task 2
+            if (json.authtoken) {
+                sessionStorage.setItem('auth-token', json.authtoken);
+                sessionStorage.setItem('name', firstName);
+                sessionStorage.setItem('email', json.email);
+            //Step 2 - Task 3
+                setIsLoggedIn(true);
+            //Step 2 - Task 4
+                navigate('/app');
+            }
+            if (json.error) {
+            //Step 2 - Task 5
+                setShowerr(json.error);
+            }
+        } //end of handle register function
+    }    //end of RegisterPage function       
+    //frm added
+    return (
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="col-md-6 col-lg-4">
