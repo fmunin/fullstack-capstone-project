@@ -55,9 +55,7 @@ function RegisterPage() {
                 setShowerr(json.error);
             }
         } //end of handle register function
-    }    //end of RegisterPage function       
-    //frm added
-    return (
+          return (
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="col-md-6 col-lg-4">
@@ -134,6 +132,8 @@ function RegisterPage() {
             </div>
 
          )//end of return
-}
+    }    //end of RegisterPage function       
+    
+  
 
 export default RegisterPage;
