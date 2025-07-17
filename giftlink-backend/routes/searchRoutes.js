@@ -36,7 +36,7 @@ router.get('/', async (req, res, next) => {
         console.log(query); //debug print out query
         // Task 4: Fetch filtered gifts using the find(query) method.
         //  Make sure to use await and store the result in the `gifts` constant
-        await collection.find(query).toArray() ; //frm added
+        gifts = await collection.find(query).toArray() ; //frm added
 
         res.json(gifts);
     } catch (e) {
