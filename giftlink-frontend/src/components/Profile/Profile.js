@@ -6,12 +6,12 @@ import { useAppContext } from '../../context/AuthContext';
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState({});
- const [updatedDetails, setUpdatedDetails] = useState({});
- const {setUserName} = useAppContext();
- const [changed, setChanged] = useState("");
-
- const [editMode, setEditMode] = useState(false);
+  const [updatedDetails, setUpdatedDetails] = useState({});
+  const {setUserName} = useAppContext();
+  const [changed, setChanged] = useState("");
+  const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const authtoken = sessionStorage.getItem("auth-token");
     if (!authtoken) {
@@ -35,63 +35,71 @@ const Profile = () => {
                 setUserDetails(storedUserDetails);
                 setUpdatedDetails(storedUserDetails);
               }
-} catch (error) {
-  console.error(error);
-  // Handle error case
-}
-};
-
-const handleEdit = () => {
-setEditMode(true);
-};
-
-const handleInputChange = (e) => {
-setUpdatedDetails({
-  ...updatedDetails,
-  [e.target.name]: e.target.value,
-});
-};
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const authtoken = sessionStorage.getItem("auth-token");
-    const email = sessionStorage.getItem("email");
-
-    if (!authtoken || !email) {
-      navigate("/app/login");
-      return;
+    } catch (error) {
+        console.error(error);
+        // Handle error case
     }
+};
 
-    const payload = { ...updatedDetails };
-    const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
-      //Step 1: Task 1
-      //Step 1: Task 2
-      //Step 1: Task 3
+  const handleEdit = () => {
+    setEditMode(true);
+  };
+
+  const handleInputChange = (e) => {
+    setUpdatedDetails({
+      ...updatedDetails,
+      [e.target.name]: e.target.value,
     });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    if (response.ok) {
-      // Update the user details in session storage
-      //Step 1: Task 4
-      //Step 1: Task 5
-      setUserDetails(updatedDetails);
-      setEditMode(false);
-      // Display success message to the user
-      setChanged("Name Changed Successfully!");
-      setTimeout(() => {
-        setChanged("");
-        navigate("/");
-      }, 1000);
+    try {
+      const authtoken = sessionStorage.getItem("auth-token");
+      const email = sessionStorage.getItem("email");
+      if (!authtoken || !email) {
+        navigate("/app/login");
+        return;
+      }
 
-    } else {
-      // Handle error case
-      throw new Error("Failed to update profile");
-    }
-  } catch (error) {
-    console.error(error);
-    // Handle error case
-  }
-};
+      const payload = { ...updatedDetails };
+      const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
+        //Step 1: Task 1
+        method:'PUT',
+        //Step 1: Task 2
+        headers: {
+            "Authorization": `Bearer ${authtoken}`,
+            "Content-Type": "application/json",
+            "Email": email,
+          },
+        //Step 1: Task 3
+        body: JSON.stringify(payload),
+      }); //end of const response blokc
+
+      if (response.ok) {
+        // Update the user details in session storage
+        //Step 1: Task 4
+        setUserName(updatedDetails.name);
+        sessionStorage.setItem("name", updatedDetails.name);//Step 1: Task 5
+            //Step 1: Task 5
+        setUserDetails(updatedDetails);
+        setEditMode(false);
+        // Display success message to the user
+        setChanged("Name Changed Successfully!");
+        setTimeout(() => {
+          setChanged("");
+          navigate("/");
+        }, 1000);
+
+      } else {
+        // Handle error case
+        throw new Error("Failed to update profile");
+      }
+    } catch (error) {
+        console.error(error);
+        // Handle error case
+      }
+    }; //END handlesubmit
 
 return (
 <div className="profile-container">
@@ -128,6 +136,6 @@ return (
 )}
 </div>
 );
-};
+}; //end of profile component 
 
 export default Profile;
