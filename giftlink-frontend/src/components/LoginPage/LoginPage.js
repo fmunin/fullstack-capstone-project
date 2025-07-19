@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 //updates from Module 4
 import {urlConfig} from '../../config';
 import { useAppContext } from '../../context/AuthContext';
@@ -28,7 +28,7 @@ function LoginPage() {
 
 
     // insert code here to create handleLogin function and include console.log
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
       e.preventDefault();
         //api call
         const res = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
