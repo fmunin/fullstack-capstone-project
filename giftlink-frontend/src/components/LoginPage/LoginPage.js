@@ -12,10 +12,7 @@ function LoginPage() {
     //insert code here to create useState hook variables for email, password
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    //updates from module 4
-    //this line was flagged by GitHub build process
-    //the variable incorrect was assigned but never used
-    //---const [incorrect, setIncorrect] = useState('');
+    const [incorrect, setIncorrect] = useState('');
     const navigate = useNavigate();
     const bearerToken = sessionStorage.getItem('bearer-token');
     const { setIsLoggedIn } = useAppContext();
