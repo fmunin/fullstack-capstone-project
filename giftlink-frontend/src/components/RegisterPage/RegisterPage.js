@@ -14,7 +14,9 @@ function RegisterPage() {
     const [email, setEmail] = useState(''); //frm added
     const [password, setPassword] = useState(''); //frm added
     //module 4 updates
-    const [showerr, setShowerr] = useState(''); //frm added module 4
+    // this line was flagged by GitHub build
+    //showerr was declared but never used??
+    //const [showerr, setShowerr] = useState(''); //frm added module 4
     const navigate = useNavigate();//frm added module 4
     const { setIsLoggedIn } = useAppContext();     //frm added module 4 
 
